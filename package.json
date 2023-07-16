@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "deploy": "aws s3 rm s3://sampleangularproject --recursive --profile todo && aws s3 sync ./dist s3://sampleangularproject --profile todo",
+    "deploy": "aws s3 rm s3://sampleangularproject --recursive --profile todo && aws s3 sync ./dist/todo s3://sampleangularproject --profile todo",
     "inv": "aws cloudfront create-invalidation --profile todo --distribution-id E3TBOO8EYC4CK1  --paths '/*'",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

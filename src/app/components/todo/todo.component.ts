@@ -67,7 +67,9 @@ export class TodoComponent implements OnInit {
   }
 
   open(content: any) {
-    this.modalService.open(content, { windowClass: "custom-modal" });
+    this.modalReference = this.modalService.open(content, {
+      windowClass: "custom-modal",
+    });
   }
 
   addTodo(content: any) {
