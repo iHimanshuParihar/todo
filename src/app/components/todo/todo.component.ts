@@ -92,20 +92,26 @@ export class TodoComponent implements OnInit {
       this.whichButton = "Add Todo";
       this.toasterService.pop("success", "Todo Updated SuccessFully");
       this.modalReference.close(content);
+      this.reset();
       this.getTodo();
     } else {
+      console.log(this.todoList.length);
       this.isEditButton = false;
-      let key = this.todoList.length;
+      let key = this.todoList.length + 1;
       const randomIndex = Math.floor(Math.random() * this.imageUrls.length);
       this.todoData.image = this.imageUrls[randomIndex];
       sessionStorage.setItem(key, JSON.stringify(this.todoData));
+      this.todoList.splice(this.abc, 1);
       this.TodoString = "";
+      this.modalReference.close(content);
       this.toasterService.pop("success", "Todo Added SuccessFully");
+      this.reset();
       this.getTodo();
     }
   }
 
   getTodo() {
+    this.todoList = [];
     var list;
     var keys = Object.keys(sessionStorage);
     var length = sessionStorage.length;
@@ -119,12 +125,13 @@ export class TodoComponent implements OnInit {
         first.key > second.key ? 1 : -1
       );
     }
+    this.todoList = [...new Set(this.todoList)];
     return this.todoList;
   }
 
   deleteTodo() {
     for (let i = 0; i < this.todoList.length; i++) {
-      if (this.todoList[i].key == this.deleteId) {
+      if (this.todoList[i].key === this.deleteId) {
         this.todoList.splice(i, 1);
         if (sessionStorage.hasOwnProperty(this.deleteId)) {
           sessionStorage.removeItem(this.deleteId);
@@ -160,11 +167,9 @@ export class TodoComponent implements OnInit {
       if (v.key === id) {
         if (v.value.inProgress) {
           v.value.inProgress = false;
-          this.todoList.splice(v.key, 1);
           sessionStorage.setItem(id, JSON.stringify(v.value));
         } else {
           v.value.inProgress = true;
-          this.todoList.splice(v.key, 1);
           sessionStorage.setItem(id, JSON.stringify(v.value));
         }
         this.getTodo();
@@ -177,7 +182,6 @@ export class TodoComponent implements OnInit {
       if (v.key === id) {
         v.value.isChecked = true;
         v.value.inProgress = false;
-        this.todoList.splice(v.key, 1);
         sessionStorage.setItem(id, JSON.stringify(v.value));
         this.getTodo();
       }
@@ -186,6 +190,7 @@ export class TodoComponent implements OnInit {
   openDoneConfirmModal() {}
 
   openDeleteConfirmModal(id: any, content: any) {
+    console.log(id, this.todoList);
     this.deleteId = id;
     this.modalService.open(content, { centered: true });
     this.toasterService.pop("warning", "Once Deleted it can't be Restored");
