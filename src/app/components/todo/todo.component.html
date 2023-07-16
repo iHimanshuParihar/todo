@@ -1,0 +1,126 @@
+<div class="todo-main-container">
+  <div class="d-flex w-100 justify-content-center">
+    <button class="addTodoBtn" (click)="open(content)">Add ToDo</button>
+  </div>
+
+  <div class="todo-list-container">
+    <div class="card-container">
+      <div
+        class="card"
+        *ngFor="let Todo of todoList; let i = index"
+        [class.in-progress]="Todo.value.inProgress"
+      >
+        <img
+          [src]="Todo.value.image"
+          [ngClass]="{ 'checked-card': Todo.value.isChecked }"
+        />
+        <img
+          class="overlay-image"
+          *ngIf="Todo.value.isChecked"
+          src="../../../assets/completed.png"
+          alt="Overlay Image"
+          (click)="isChecked(Todo.key)"
+        />
+        <h2>{{ Todo.value.name }}</h2>
+        <p>
+          {{ Todo.value.description }}
+        </p>
+
+        <div class="icon-container">
+          <i
+            class="fa fa-check"
+            ngbPopover="Done"
+            triggers="mouseenter:mouseleave"
+            style="color: green; cursor: pointer; font-size: 1.3rem"
+            [hidden]="Todo.value.isChecked"
+            (click)="isChecked(Todo.key)"
+          ></i>
+          <i
+            class="fa fa-gear"
+            ngbPopover="In-Progress"
+            triggers="mouseenter:mouseleave"
+            style="color: rgb(226, 204, 6); cursor: pointer; font-size: 1.3rem"
+            (click)="inProgress(Todo.key)"
+            [hidden]="Todo.value.isChecked"
+          ></i>
+          <i
+            class="fa fa-pencil"
+            ngbPopover="Edit"
+            triggers="mouseenter:mouseleave"
+            style="color: rgb(90, 6, 226); cursor: pointer; font-size: 1.3rem"
+            (click)="editTodo(Todo.key, content)"
+            [hidden]="Todo.value.isChecked"
+          ></i>
+          <i
+            class="fa fa-trash"
+            ngbPopover="Delete!"
+            triggers="mouseenter:mouseleave"
+            style="color: #ff000c; cursor: pointer; font-size: 1.3rem"
+            (click)="openDeleteConfirmModal(Todo.key, deleteModal)"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add/Edit ToDo -->
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add ToDo</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="d('Cross click'); reset()"
+      ></button>
+    </div>
+    <div class="modal-body d-flex justify-content-center">
+      <div class="w-100">
+        <form class="form">
+          <div class="group">
+            <input
+              placeholder=""
+              type="text"
+              id="todoAdd"
+              name="todolist"
+              [(ngModel)]="todoData.name"
+              #todo="ngModel"
+              ngModel
+              required
+            />
+            <label for="name">Name</label>
+          </div>
+
+          <div class="group">
+            <textarea
+              placeholder=""
+              id="description"
+              name="description"
+              rows="5"
+              [(ngModel)]="todoData.description"
+              required=""
+            ></textarea>
+            <label for="description">Description</label>
+          </div>
+          <button type="submit" (click)="addTodo(content)">
+            {{ whichButton }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Delete ToDo -->
+  <ng-template #deleteModal let-modal>
+    <div class="modal-body text-center">
+      <h5>Are You Sure You Want To Delete This ToDo ?</h5>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <button class="cancel" (click)="modal.close('Cross click'); reset()">
+        No
+      </button>
+      <button class="save" (click)="modal.close('Save click'); deleteTodo()">
+        Yes
+      </button>
+    </div>
+  </ng-template>
+</div>
