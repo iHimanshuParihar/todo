@@ -27,37 +27,41 @@
         </p>
 
         <div class="icon-container">
-          <i
-            class="fa fa-check"
+          <img
+            src="../../../assets/done.svg"
             ngbPopover="Done"
+            width="25rem"
+            style="cursor: pointer"
             triggers="mouseenter:mouseleave"
-            style="color: green; cursor: pointer; font-size: 1.3rem"
             [hidden]="Todo.value.isChecked"
             (click)="isChecked(Todo.key)"
-          ></i>
-          <i
-            class="fa fa-gear"
+          />
+          <img
+            src="../../../assets/inprogress.svg"
             ngbPopover="In-Progress"
             triggers="mouseenter:mouseleave"
-            style="color: rgb(226, 204, 6); cursor: pointer; font-size: 1.3rem"
             (click)="inProgress(Todo.key)"
+            width="23rem"
+            style="cursor: pointer"
             [hidden]="Todo.value.isChecked"
-          ></i>
-          <i
-            class="fa fa-pencil"
+          />
+          <img
+            src="../../../assets/edit.svg"
             ngbPopover="Edit"
+            width="23rem"
+            style="cursor: pointer"
             triggers="mouseenter:mouseleave"
-            style="color: rgb(90, 6, 226); cursor: pointer; font-size: 1.3rem"
             (click)="editTodo(Todo.key, content)"
             [hidden]="Todo.value.isChecked"
-          ></i>
-          <i
-            class="fa fa-trash"
+          />
+          <img
+            src="../../../assets/delete.svg"
             ngbPopover="Delete!"
+            width="20rem"
+            style="cursor: pointer"
             triggers="mouseenter:mouseleave"
-            style="color: #ff000c; cursor: pointer; font-size: 1.3rem"
             (click)="openDeleteConfirmModal(Todo.key, deleteModal)"
-          ></i>
+          />
         </div>
       </div>
     </div>
