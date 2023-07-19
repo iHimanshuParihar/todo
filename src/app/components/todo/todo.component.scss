@@ -173,3 +173,10 @@
     min-width: 170px;
   }
 }
+
+.todo-title,
+.todo-description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

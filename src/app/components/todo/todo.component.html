@@ -21,8 +21,18 @@
           alt="Overlay Image"
           (click)="isChecked(Todo.key)"
         />
-        <h2>{{ Todo.value.name }}</h2>
-        <p>
+        <h2
+          class="todo-title"
+          triggers="mouseenter:mouseleave"
+          ngbPopover="{{ Todo.value.name }}"
+        >
+          {{ Todo.value.name }}
+        </h2>
+        <p
+          class="todo-description"
+          triggers="mouseenter:mouseleave"
+          ngbPopover="{{ Todo.value.description }}"
+        >
           {{ Todo.value.description }}
         </p>
 

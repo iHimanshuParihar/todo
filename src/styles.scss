@@ -4,6 +4,11 @@
 @import "bootstrap/scss/bootstrap";
 @import "node_modules/angular2-toaster/toaster";
 
+body {
+  font-family: serif;
+  font-size: 15px;
+}
+
 .toast:not(.show) {
   display: block !important;
 }
